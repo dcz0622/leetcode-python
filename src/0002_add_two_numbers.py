@@ -25,6 +25,27 @@ EXAMPLE
 class Solution:
   
   def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-    l3Head = ListNode(0)
-    l3Iterator = l3Head
+    l1Iterator = l1
+    l2Iterator = l2
+    carry = 0
     
+    l3 = ListNode(None) # 1st element is dummy.
+    l3Iterator = l3
+    
+    while l1Iterator is not None or l2Iterator is not None:
+      x = l1Iterator.val if l1Iterator is not None else 0
+      y = l2Iterator.val if l2Iterator is not None else 0
+      sum = x + y + carry # Carry from previous loop iteration
+      carry = sum // 10 # Update carry for next loop iteration.
+      
+      l3Iterator.next = ListNode(sum % 10)
+      l3Iterator = l3Iterator.next
+      
+      # Update variables to prepare for next loop iteration.
+      l1Iterator = l1Iterator.next if l1Iterator is not None else None
+      l2Iterator = l2Iterator.next if l2Iterator is not None else None
+    
+    if carry != 0:
+      l3Iterator.next = ListNode(carry)
+    
+    return l3.next
