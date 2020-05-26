@@ -6,13 +6,6 @@ and each of their nodes contain a single digit. Add the two numbers and return i
 
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
-Definition for singly-linked list:
-  
-  class ListNode:
-    def __init__(self, val=0, next=None):
-      self.val = val
-      self.next = next
-
 
 EXAMPLE
 
@@ -22,6 +15,42 @@ EXAMPLE
 """
 
 
+class ListNode:
+  
+  """
+  Definition for singly-linked list.
+  """
+  
+  def __init__(self, val=0, next=None):
+    self.val = val
+    self.next = next
+  
+  @classmethod
+  def fromList(cls, nums=[0]):
+    if nums is None or nums == []:
+      return cls(val=None, next=None)
+    
+    head = cls(val=None, next=None)
+    iter = head
+    for num in nums:
+      iter.next = cls(val=num, next=None)
+      iter = iter.next
+    head = head.next
+    
+    return head
+  
+  def __str__(self):
+    if self.val is None:
+      return 'None'
+    
+    iter = self
+    ret = str(iter.val)
+    while iter.next is not None:
+      iter = iter.next
+      ret = ret + ' -> ' + str(iter.val)
+    return ret
+
+
 class Solution:
   
   def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
@@ -29,14 +58,14 @@ class Solution:
     l2Iter = l2
     carry = 0
     
-    l3 = ListNode(None) # 1st element is dummy.
+    l3 = ListNode(None)  # 1st element is dummy.
     l3Iter = l3
     
     while l1Iter is not None or l2Iter is not None:
       x = l1Iter.val if l1Iter is not None else 0
       y = l2Iter.val if l2Iter is not None else 0
-      sum = x + y + carry # Carry from previous loop iteration
-      carry = sum // 10 # Update carry for next loop iteration.
+      sum = x + y + carry  # carry is from previous loop iteration.
+      carry = sum // 10  # Update carry for next loop iteration.
       
       l3Iter.next = ListNode(sum % 10)
       l3Iter = l3Iter.next
@@ -49,3 +78,11 @@ class Solution:
       l3Iter.next = ListNode(carry)
     
     return l3.next
+
+
+if __name__ == '__main__':
+  l1 = ListNode.fromList([2, 4, 3])
+  l2 = ListNode.fromList([5, 6, 4])
+  
+  instance = Solution()
+  print(instance.addTwoNumbers(l1, l2))

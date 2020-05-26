@@ -53,3 +53,7 @@ class Solution:
       endIdx += 1
     
     return maxCount
+
+if __name__ == '__main__':
+  instance = Solution()
+  print(instance.lengthOfLongestSubstring("abcabcbb"))
