@@ -46,7 +46,7 @@ class Solution:
         startIdx = max(startIdx, charToIdxDict[currChar] + 1)
       
       currCount = endIdx - startIdx + 1
-      maxCount = currCount if currCount > maxCount else maxCount
+      maxCount = max(maxCount, currCount)
       charToIdxDict[currChar] = endIdx
       
       # Update variable to prepare for next loop iteration.
