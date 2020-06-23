@@ -16,7 +16,6 @@ EXAMPLE
 
 
 class ListNode:
-  
   """
   Definition for singly-linked list.
   """
@@ -30,19 +29,15 @@ class ListNode:
     if nums is None or nums == []:
       return cls(val=None, next=None)
     
-    head = cls(val=None, next=None)
+    head = cls(val=None, next=None) # 1st element is dummy.
     iter = head
     for num in nums:
       iter.next = cls(val=num, next=None)
       iter = iter.next
-    head = head.next
     
-    return head
+    return head.next # Get rid of the dummy element.
   
   def __str__(self):
-    if self.val is None:
-      return 'None'
-    
     iter = self
     ret = str(iter.val)
     while iter.next is not None:
@@ -66,18 +61,17 @@ class Solution:
       y = l2Iter.val if l2Iter is not None else 0
       sum = x + y + carry  # carry is from previous loop iteration.
       carry = sum // 10  # Update carry for next loop iteration.
-      
       l3Iter.next = ListNode(sum % 10)
-      l3Iter = l3Iter.next
       
       # Update variables to prepare for next loop iteration.
       l1Iter = l1Iter.next if l1Iter is not None else None
       l2Iter = l2Iter.next if l2Iter is not None else None
+      l3Iter = l3Iter.next
     
     if carry != 0:
       l3Iter.next = ListNode(carry)
     
-    return l3.next
+    return l3.next # Get rid of the dummy element.
 
 
 if __name__ == '__main__':
